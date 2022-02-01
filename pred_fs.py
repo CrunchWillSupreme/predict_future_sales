@@ -19,6 +19,7 @@ data.info()
 
 data.corr()
 
+print(np.sort(data['shop_id'].unique()))
 # corretion map
 f, ax = plt.subplots(figsize=(18,18))
 sns.heatmap(data.corr(), annot=True, linewidths=.5, fmt='.1f', ax=ax)
@@ -44,10 +45,13 @@ data.plot(kind='scatter', x='item_cnt_day', y='item_price',alpha = 0.5,color = '
 plt.xlabel('item_cnt_day')              # label = name of label
 plt.ylabel('item_price')
 plt.title('item_cnt_day item_price Scatter Plot')            # title = title of plot
+plt.show()
 
 # Histogram
 # bins = number of bar in figure
 data.shop_id.plot(kind = 'hist', bins = 50, figsize = (12,12))
+plt.xlabel('shop_id')
+plt.title('histogram of shop_id')
 plt.show()
 
 # clf() = cleans it up again you can start a fresh
@@ -89,3 +93,47 @@ print(type(data_frame))
 
 
 x = data['item_id']>22000           # there are only 28190
+data[x]
+
+# 2 - Filtering pandas with logical_and
+# There are onlly 1459 items who have higher item_id value than 22000 and higher tiem_price value than 1000
+data[np.logical_and(data['item_id']>22000, data['item_price']>1000)]
+
+# This is also same with previous code line. Therefore we can also use '&'
+data[(data['item_id']>22000) & (data['item_price']>1000)]
+
+# while and for loops
+
+for index, value in data[['shop_id']][0:5].iterrows():
+    print(index, " : ", value)
+
+
+# LAMBDA FUNCTION
+square = lambda x: x**2             # where x is name of argument
+print(square(4))
+tot = lambda x,y,z: x+y+z
+print(tot(1,2,3))
+
+number_list = [1,2,3]
+y = map(lambda x:x**2, number_list)
+
+
+# ITERATORS
+name = 'ronaldo'
+it = iter(name)
+print(next(it))
+print(*it)
+
+# zip example
+list1 = [1,2,3,4]
+list2 = [5,6,7,8,9]
+z = zip(list1,list2)
+print(z)
+z_list = list(z)
+print(z_list)
+
+un_zip = zip(*z_list)
+un_list1,un_list2 = list(un_zip) # unzip returns tuple
+print(un_list1)
+print(un_list2)
+print(type(un_list2))
